@@ -1,5 +1,6 @@
 package com.example.recipesearch
 
+import android.content.res.Resources
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -11,7 +12,11 @@ import com.example.recipesearch.databinding.RecipeLayoutBinding
 class RecipeAdapter( var onClick:(Hit) -> Unit): ListAdapter<Hit, RecipeAdapter.RecipeAdapter>(diffCallback) {
     inner class RecipeAdapter(var binding: RecipeLayoutBinding):RecyclerView.ViewHolder(binding.root) {
         fun bind(recipe: Hit){
-            binding.textView.text = recipe.recipe.label
+
+            binding.recipeName.text = recipe.recipe.label
+            binding.recipeIngredients.text = itemView.context.getString(R.string.ingredients,recipe.recipe.ingredients.size.toString())
+            binding.recipeCalories.text = itemView.context.getString(R.string.calories,recipe.recipe.calories.toInt().toString())
+            binding.recipeName.text = recipe.recipe.label
             Glide.with(binding.root).load(recipe.recipe.image).into(binding.imageView)
             binding.layout.setOnClickListener {
                 onClick(recipe)
