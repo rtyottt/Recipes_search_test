@@ -14,9 +14,9 @@ class RecipeViewModel @Inject constructor(
 ):ViewModel() {
     var _searchResult = MutableSharedFlow<RecipeResult>()
     var searchResult: SharedFlow<RecipeResult> = _searchResult.asSharedFlow()
-    fun getData(){
+    fun getData(searchQuery:String){
         viewModelScope.launch {
-            var eee = retrofit.getRecipesBySearch().body()!!
+            var eee = retrofit.getRecipesBySearch(searchQuery).body()!!
             _searchResult.emit(eee)
         }
     }

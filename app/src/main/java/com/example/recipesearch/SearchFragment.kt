@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.webkit.WebViewClient
 import androidx.activity.viewModels
+import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -42,7 +43,17 @@ class SearchFragment : Fragment() {
         }
         binding.recycler.layoutManager = LinearLayoutManager(activity)
         binding.recycler.adapter = adapter
-        viewModel.getData()
+        binding.searchView.setOnQueryTextListener(object:
+            android.widget.SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(p0: String?): Boolean {
+                viewModel.getData(p0!!)
+                return false
+            }
+
+            override fun onQueryTextChange(p0: String?): Boolean {
+                return false
+            }
+        })
         lifecycleScope.launchWhenStarted {
             viewModel.searchResult.collectLatest {
                 adapter.submitList(it.hits)
