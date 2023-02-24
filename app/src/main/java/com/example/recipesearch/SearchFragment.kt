@@ -12,6 +12,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.recipesearch.databinding.ActivityMainBinding
 import com.example.recipesearch.databinding.FragmentSearchBinding
@@ -19,6 +20,7 @@ import kotlinx.coroutines.flow.collectLatest
 
 
 class SearchFragment : Fragment() {
+    private val args: SearchFragmentArgs by navArgs()
     private val viewModel: RecipeViewModel by activityViewModels()
     lateinit var adapter: RecipeAdapter
     lateinit var binding: FragmentSearchBinding
@@ -37,16 +39,12 @@ class SearchFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        adapter = RecipeAdapter{ hit->
-            val direction = SearchFragmentDirections.actionSearchFragmentToWebFragment(hit.recipe.url)
-            findNavController().navigate(direction)
-        }
-        binding.recycler.layoutManager = LinearLayoutManager(activity)
-        binding.recycler.adapter = adapter
+        viewModel.getData()
+        setUpRecycler()
         binding.searchView.setOnQueryTextListener(object:
             android.widget.SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(p0: String?): Boolean {
-                viewModel.getData(p0!!)
+                viewModel.updateQuery(p0!!)
                 return false
             }
 
@@ -54,6 +52,15 @@ class SearchFragment : Fragment() {
                 return false
             }
         })
+    }
+
+    private fun setUpRecycler() {
+        adapter = RecipeAdapter{ hit->
+            val direction = SearchFragmentDirections.actionSearchFragmentToWebFragment(hit.recipe.url)
+            findNavController().navigate(direction)
+        }
+        binding.recycler.layoutManager = LinearLayoutManager(activity)
+        binding.recycler.adapter = adapter
         lifecycleScope.launchWhenStarted {
             viewModel.searchResult.collectLatest {
                 adapter.submitList(it.hits)

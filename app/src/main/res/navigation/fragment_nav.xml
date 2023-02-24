@@ -13,6 +13,13 @@
         <action
             android:id="@+id/action_searchFragment_to_webFragment"
             app:destination="@id/webFragment" />
+        <action
+            android:id="@+id/action_searchFragment_to_savedFragment"
+            app:destination="@id/savedFragment" />
+        <argument
+            android:name="url"
+            app:argType="string"
+            android:defaultValue="salad"/>
     </fragment>
     <fragment
         android:id="@+id/webFragment"
@@ -25,5 +32,20 @@
         <argument
             android:name="url"
             app:argType="string" />
+        <action
+            android:id="@+id/action_webFragment_to_savedFragment"
+            app:destination="@id/savedFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/savedFragment"
+        android:name="com.example.recipesearch.SavedFragment"
+        android:label="fragment_saved"
+        tools:layout="@layout/fragment_saved" >
+        <action
+            android:id="@+id/action_savedFragment_to_webFragment"
+            app:destination="@id/webFragment" />
+        <action
+            android:id="@+id/action_savedFragment_to_searchFragment"
+            app:destination="@id/searchFragment" />
     </fragment>
 </navigation>

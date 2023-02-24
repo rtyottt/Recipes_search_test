@@ -1,5 +1,7 @@
 package com.example.recipesearch
 
+import android.app.Application
+import androidx.room.Room
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -31,4 +33,13 @@ object RecipeModule {
             .build()
             .create(RetrofitApi::class.java)
     }
+    @Provides
+    @Singleton
+    fun ProvideDatabase(context: Application) =
+        Room.databaseBuilder(context,SearchDatabase::class.java,"search_database")
+        .fallbackToDestructiveMigration().createFromAsset("database/search_table.db")
+        .build()
+    @Provides
+    @Singleton
+    fun ProvideDao(database: SearchDatabase) = database.getDao()
 }
