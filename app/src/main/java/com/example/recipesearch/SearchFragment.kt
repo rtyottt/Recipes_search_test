@@ -5,23 +5,19 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.webkit.WebViewClient
-import androidx.activity.viewModels
-import androidx.appcompat.widget.SearchView
+import android.widget.Toast
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.recipesearch.databinding.ActivityMainBinding
 import com.example.recipesearch.databinding.FragmentSearchBinding
 import kotlinx.coroutines.flow.collectLatest
 
 
 class SearchFragment : Fragment() {
     private val args: SearchFragmentArgs by navArgs()
-    private val viewModel: RecipeViewModel by activityViewModels()
+    private val viewModel: SearchViewModel by activityViewModels()
     lateinit var adapter: RecipeAdapter
     lateinit var binding: FragmentSearchBinding
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -66,6 +62,12 @@ class SearchFragment : Fragment() {
                 adapter.submitList(it.hits)
             }
         }
+        adapter.setOnSaveClickListener(object :RecipeAdapter.OnItemClickListener{
+            override fun onItemClick(recipe: Hit) {
+                viewModel.saveRecipe(recipe)
+            }
+
+        })
     }
 
 }

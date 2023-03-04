@@ -8,7 +8,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class RecipeViewModel @Inject constructor(
+class SearchViewModel @Inject constructor(
     var retrofit: RetrofitApi,
     var searchDao: SearchDao
 ):ViewModel() {
@@ -24,6 +24,11 @@ class RecipeViewModel @Inject constructor(
     fun updateQuery(query: String){
         viewModelScope.launch {
             searchDao.updateLastSearchQuery(LastSearch(0,query))
+        }
+    }
+    fun saveRecipe(recipe: Hit){
+        viewModelScope.launch {
+            searchDao.saveRecipe(recipe)
         }
     }
 }

@@ -1,5 +1,9 @@
 package com.example.recipesearch
 
+import androidx.room.Embedded
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
 
 data class RecipeResult(
     val _links: Links,
@@ -12,11 +16,16 @@ data class RecipeResult(
 data class Links(
     val next: Next
 )
-
+@Entity(tableName = "saved_table")
 data class Hit(
+    @Embedded
     val _links: LinksX,
+    @Embedded
     val recipe: Recipe
-)
+){
+    @PrimaryKey(autoGenerate = true)
+    var localId: Int = 0
+}
 
 data class Next(
     val href: String,
@@ -24,26 +33,16 @@ data class Next(
 )
 
 data class LinksX(
+    @Embedded
     val self: Self
 )
-
 data class Recipe(
     val calories: Double,
-    val cautions: List<String>,
-    val cuisineType: List<String>,
-    val dietLabels: List<String>,
-    val digest: List<Digest>,
-    val dishType: List<String>,
-    val healthLabels: List<String>,
     val image: String,
-    val images: Images,
-    val ingredientLines: List<String>,
     val ingredients: List<Ingredient>,
     val label: String,
-    val mealType: List<String>,
     val shareAs: String,
     val source: String,
-    val totalDaily: TotalDaily,
 //    val totalNutrients: TotalNutrients,
     val totalTime: Double,
     val totalWeight: Double,
