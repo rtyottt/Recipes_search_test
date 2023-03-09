@@ -41,11 +41,11 @@ class SearchFragment : Fragment() {
             android.widget.SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(p0: String?): Boolean {
                 viewModel.updateQuery(p0!!)
-                return false
+                return true
             }
 
             override fun onQueryTextChange(p0: String?): Boolean {
-                return false
+                return true
             }
         })
     }

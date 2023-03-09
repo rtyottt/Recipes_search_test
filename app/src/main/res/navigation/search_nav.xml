@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/search_nav"
+    app:startDestination="@id/savedFragment2">
+
+    <fragment
+        android:id="@+id/savedFragment2"
+        android:name="com.example.recipesearch.SavedFragment"
+        android:label="fragment_saved"
+        tools:layout="@layout/fragment_saved" >
+        <action
+            android:id="@+id/action_savedFragment2_to_webFragment2"
+            app:destination="@id/webFragment2" />
+    </fragment>
+    <fragment
+        android:id="@+id/webFragment2"
+        android:name="com.example.recipesearch.WebFragment"
+        android:label="fragment_web"
+        tools:layout="@layout/fragment_web">
+        <argument
+            android:name="url"
+            app:argType="string" />
+    </fragment>
+</navigation>

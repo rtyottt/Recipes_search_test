@@ -6,13 +6,13 @@
     app:startDestination="@id/browsingFragment">
 
     <fragment
-        android:id="@+id/savedFragment"
-        android:name="com.example.recipesearch.SavedFragment"
-        android:label="fragment_saved"
-        tools:layout="@layout/fragment_saved" />
-    <fragment
         android:id="@+id/browsingFragment"
         android:name="com.example.recipesearch.BrowsingFragment"
         android:label="fragment_browsing"
         tools:layout="@layout/fragment_browsing" />
+    <fragment
+        android:id="@+id/globalSaveFragment"
+        android:name="com.example.recipesearch.GlobalSaveFragment"
+        android:label="fragment_global_save"
+        tools:layout="@layout/fragment_global_save" />
 </navigation>

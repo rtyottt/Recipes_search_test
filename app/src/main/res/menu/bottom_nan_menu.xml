@@ -6,7 +6,7 @@
         android:icon="@drawable/ic_search"
         android:title=""
         app:showAsAction="always"/>
-    <item android:id="@+id/savedFragment"
+    <item android:id="@+id/globalSaveFragment"
         android:icon="@drawable/ic_saved_recipes"
         android:title=""
         app:showAsAction="always"/>

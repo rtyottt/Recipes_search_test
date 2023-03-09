@@ -33,10 +33,28 @@ class SavedFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setUpRecycler()
+        setUpSearchWiev()
 
     }
+
+    private fun setUpSearchWiev() {
+        binding.savedSearchView.setOnQueryTextListener(object:
+            android.widget.SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(p0: String?): Boolean {
+                return true
+            }
+
+            override fun onQueryTextChange(p0: String?): Boolean {
+                viewModel.updateQuery(p0.orEmpty())
+                return true
+            }
+        })
+    }
+
     private fun setUpRecycler() {
         adapter = RecipeAdapter{ hit->
+            val direction = SavedFragmentDirections.actionSavedFragment2ToWebFragment2(hit.recipe.url)
+            findNavController().navigate(direction)
         }
         binding.savedRecycler.layoutManager = LinearLayoutManager(activity)
         binding.savedRecycler.adapter = adapter
