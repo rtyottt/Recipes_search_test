@@ -1,6 +1,7 @@
-package com.example.recipesearch
+package com.example.recipesearch.room
 
 import androidx.room.TypeConverter
+import com.example.recipesearch.Ingredient
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import java.lang.reflect.Type

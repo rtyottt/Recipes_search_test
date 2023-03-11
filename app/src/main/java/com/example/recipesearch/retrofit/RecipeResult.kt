@@ -16,16 +16,11 @@ data class RecipeResult(
 data class Links(
     val next: Next
 )
-@Entity(tableName = "saved_table")
+
 data class Hit(
-    @Embedded
     val _links: LinksX,
-    @Embedded
     val recipe: Recipe
-){
-    @PrimaryKey(autoGenerate = true)
-    var localId: Int = 0
-}
+)
 
 data class Next(
     val href: String,
@@ -33,7 +28,6 @@ data class Next(
 )
 
 data class LinksX(
-    @Embedded
     val self: Self
 )
 data class Recipe(

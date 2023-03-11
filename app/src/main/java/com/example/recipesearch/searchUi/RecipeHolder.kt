@@ -15,7 +15,7 @@ class RecipeAdapter( var onClick:(Hit) -> Unit): ListAdapter<Hit, RecipeAdapter.
         fun bind(recipe: Hit,listener: OnItemClickListener){
             binding.recipeName.text = recipe.recipe.label
             binding.recipeIngredients.text = itemView.context.getString(R.string.ingredients,recipe.recipe.ingredients.size.toString())
-            binding.recipeCalories.text = itemView.context.getString(R.string.calories,recipe.recipe.calories.toInt().toString())
+            binding.recipeCalories.text = itemView.context.getString(R.string.calories,recipe.recipe.calories.toString())
             Glide.with(binding.root).load(recipe.recipe.image).into(binding.imageView)
             binding.layout.setOnClickListener {
                 onClick(recipe)

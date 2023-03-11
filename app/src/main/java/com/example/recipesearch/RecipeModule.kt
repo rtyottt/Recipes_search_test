@@ -2,6 +2,8 @@ package com.example.recipesearch
 
 import android.app.Application
 import androidx.room.Room
+import com.example.recipesearch.retrofit.RetrofitApi
+import com.example.recipesearch.room.SearchDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -10,7 +12,6 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.create
 import javax.inject.Singleton
 
 @Module
@@ -36,10 +37,9 @@ object RecipeModule {
     @Provides
     @Singleton
     fun ProvideDatabase(context: Application) =
-        Room.databaseBuilder(context,SearchDatabase::class.java,"search_database")
+        Room.databaseBuilder(context, SearchDatabase::class.java,"search_database")
         .fallbackToDestructiveMigration().createFromAsset("database/search_table.db")
         .build()
     @Provides
-    @Singleton
     fun ProvideDao(database: SearchDatabase) = database.getDao()
 }

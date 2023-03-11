@@ -1,16 +1,17 @@
-package com.example.recipesearch
+package com.example.recipesearch.searchUi
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.recipesearch.Hit
+import com.example.recipesearch.RecipeAdapter
 import com.example.recipesearch.databinding.FragmentSearchBinding
 import kotlinx.coroutines.flow.collectLatest
 
@@ -62,7 +63,7 @@ class SearchFragment : Fragment() {
                 adapter.submitList(it.hits)
             }
         }
-        adapter.setOnSaveClickListener(object :RecipeAdapter.OnItemClickListener{
+        adapter.setOnSaveClickListener(object : RecipeAdapter.OnItemClickListener {
             override fun onItemClick(recipe: Hit) {
                 viewModel.saveRecipe(recipe)
             }

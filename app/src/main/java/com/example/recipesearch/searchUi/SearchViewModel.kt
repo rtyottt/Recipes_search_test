@@ -1,7 +1,13 @@
-package com.example.recipesearch
+package com.example.recipesearch.searchUi
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.recipesearch.Hit
+import com.example.recipesearch.RecipeResult
+import com.example.recipesearch.retrofit.RetrofitApi
+import com.example.recipesearch.room.LastSearch
+import com.example.recipesearch.room.SavedRecipe
+import com.example.recipesearch.room.SearchDao
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -26,9 +32,9 @@ class SearchViewModel @Inject constructor(
             searchDao.updateLastSearchQuery(LastSearch(0,query))
         }
     }
-    fun saveRecipe(recipe: Hit){
+    fun saveRecipe(hit: Hit){
         viewModelScope.launch {
-            searchDao.saveRecipe(recipe)
+            searchDao.saveRecipe(SavedRecipe(ingredients = hit.recipe.ingredients, label = hit.recipe.label, image = hit.recipe.image, calories = hit.recipe.calories, url = hit.recipe.url))
         }
     }
 }
