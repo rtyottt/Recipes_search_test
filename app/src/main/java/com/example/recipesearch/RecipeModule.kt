@@ -1,9 +1,14 @@
 package com.example.recipesearch
 
 import android.app.Application
+import android.content.Context
+import android.content.SharedPreferences
 import androidx.room.Room
 import com.example.recipesearch.retrofit.RetrofitApi
+import com.example.recipesearch.room.SearchDao
 import com.example.recipesearch.room.SearchDatabase
+import com.example.recipesearch.saveUi.SaveRepository
+import com.example.recipesearch.searchUi.SearchRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -26,20 +31,27 @@ object RecipeModule {
     }
     @Provides
     @Singleton
-    fun provideRetrofit(getOkHttpInstance:OkHttpClient): RetrofitApi {
-        return Retrofit.Builder()
+    fun provideRetrofit(getOkHttpInstance:OkHttpClient) = Retrofit.Builder()
             .client(getOkHttpInstance)
             .baseUrl("https://api.edamam.com/")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create(RetrofitApi::class.java)
-    }
     @Provides
     @Singleton
-    fun ProvideDatabase(context: Application) =
+    fun provideDatabase(context: Application) =
         Room.databaseBuilder(context, SearchDatabase::class.java,"search_database")
-        .fallbackToDestructiveMigration().createFromAsset("database/search_table.db")
+        .fallbackToDestructiveMigration()
         .build()
     @Provides
-    fun ProvideDao(database: SearchDatabase) = database.getDao()
+    fun provideDao(database: SearchDatabase) = database.getDao()
+
+    @Provides
+    @Singleton
+    fun provideSharedPreference(context: Application) = context.getSharedPreferences("recipe",Context.MODE_PRIVATE)
+
+    @Provides
+    fun provideSearchRepository(searchDao: SearchDao, prefs: SharedPreferences,retrofit: RetrofitApi) = SearchRepository(searchDao,prefs,retrofit)
+    @Provides
+    fun provideSaveRepository(searchDao: SearchDao) = SaveRepository(searchDao)
 }

@@ -10,15 +10,10 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface SearchDao {
-    @Query("SELECT * FROM search_table")
-    fun getLastSearchQuery():Flow<LastSearch>
-    @Update()
-    suspend fun updateLastSearchQuery(lastSearch: LastSearch)
-
+    @Query("SELECT * FROM saved_table WHERE label LIKE '%' || :query || '%'")
+    fun getSavedRecipe(query:String):Flow<List<SavedRecipe>>
     @Delete
     suspend fun deleteRecipe(savedRecipe: SavedRecipe)
     @Insert()
     suspend fun saveRecipe(savedRecipe: SavedRecipe)
-    @Query("SELECT * FROM saved_table")
-    fun getSavedRecipe():Flow<List<SavedRecipe>>
 }

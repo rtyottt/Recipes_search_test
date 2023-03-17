@@ -5,7 +5,7 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.example.recipesearch.Hit
 
-@Database(entities = [LastSearch::class, SavedRecipe::class], exportSchema = false, version = 1)
+@Database(entities = [ SavedRecipe::class], exportSchema = false, version = 1)
 @TypeConverters(IngredientConverter::class)
 abstract class SearchDatabase:RoomDatabase() {
     abstract fun getDao(): SearchDao
